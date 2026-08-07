@@ -1,9 +1,12 @@
 package com.weekendwarriorscompanion.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -23,6 +27,10 @@ fun MenuScreen(
     onRemoveCharacter: () -> Unit,
     onPlay: () -> Unit
 ) {
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val scrollState = rememberScrollState()
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -30,23 +38,26 @@ fun MenuScreen(
         color = MaterialTheme.colorScheme.background
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Header inspired by the book cover
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.35f)
+                    .heightIn(min = if (isLandscape) 120.dp else 200.dp)
                     .background(MaterialTheme.colorScheme.primary)
                     .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    val titleFontSize = if (isLandscape) 40.sp else 60.sp
                     Text(
                         text = "WEEKEND",
                         style = MaterialTheme.typography.headlineLarge.copy(
-                            fontSize = 60.sp,
+                            fontSize = titleFontSize,
                             fontWeight = FontWeight.Black,
                             letterSpacing = 2.sp
                         ),
@@ -56,7 +67,7 @@ fun MenuScreen(
                     Text(
                         text = "WARRIORS",
                         style = MaterialTheme.typography.headlineLarge.copy(
-                            fontSize = 60.sp,
+                            fontSize = titleFontSize,
                             fontWeight = FontWeight.Black,
                             letterSpacing = 2.sp
                         ),
@@ -71,12 +82,15 @@ fun MenuScreen(
 
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(24.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val buttonModifier = Modifier.fillMaxWidth().height(60.dp)
+                val buttonModifier = Modifier
+                    .widthIn(max = 600.dp)
+                    .fillMaxWidth()
+                    .height(60.dp)
                 val buttonShape = RoundedCornerShape(8.dp)
                 val buttonColors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.secondary,
@@ -95,15 +109,26 @@ fun MenuScreen(
                     Text("REMOVE CHARACTER", fontWeight = FontWeight.Bold)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = onPlay, modifier = Modifier.fillMaxWidth().height(70.dp), shape = buttonShape, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)) {
+                Button(
+                    onClick = onPlay,
+                    modifier = Modifier
+                        .widthIn(max = 600.dp)
+                        .fillMaxWidth()
+                        .height(70.dp),
+                    shape = buttonShape,
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                ) {
                     Text("PLAY", fontSize = 24.sp, fontWeight = FontWeight.Black)
                 }
 
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(32.dp))
 
                 // Footer
                 Surface(
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                    modifier = Modifier
+                        .widthIn(max = 600.dp)
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                     color = MaterialTheme.colorScheme.primary,
                     shape = RoundedCornerShape(4.dp)
                 ) {
