@@ -88,7 +88,7 @@ fun PlayStoreIcon() {
                         val path = androidx.compose.ui.graphics.Path().apply {
                             moveTo(offset.x + 0 * scale, offset.y + 0 * scale)
                             lineTo(offset.x + 12.dp.toPx() * scale, offset.y + 40.dp.toPx() * scale)
-                            lineTo(offset.x + 20.dp.toPx() * scale, offset.y + 20.dp.toPx() * scale)
+                            lineTo(offset.x + 20.dp.toPx() * scale, offset.y + 25.dp.toPx() * scale)
                             lineTo(offset.x + 28.dp.toPx() * scale, offset.y + 40.dp.toPx() * scale)
                             lineTo(offset.x + 40.dp.toPx() * scale, offset.y + 0 * scale)
                             lineTo(offset.x + 30.dp.toPx() * scale, offset.y + 0 * scale)

@@ -31,16 +31,16 @@ fun MenuScreen(
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val scrollState = rememberScrollState()
 
-    Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .safeDrawingPadding(),
-        color = MaterialTheme.colorScheme.background
-    ) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = MaterialTheme.colorScheme.background
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState),
+                .padding(paddingValues)
+                .verticalScroll(scrollState)
+                .navigationBarsPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Header inspired by the book cover
@@ -73,6 +73,16 @@ fun MenuScreen(
                         ),
                         color = Color.White,
                         textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = "THE ULTIMATE TABLETOP COMPANION",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 1.sp
+                        ),
+                        color = Color.White.copy(alpha = 0.9f),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 8.dp)
                     )
                 }
             }
@@ -119,26 +129,6 @@ fun MenuScreen(
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
                     Text("PLAY", fontSize = 24.sp, fontWeight = FontWeight.Black)
-                }
-
-                Spacer(modifier = Modifier.height(32.dp))
-
-                // Footer
-                Surface(
-                    modifier = Modifier
-                        .widthIn(max = 600.dp)
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    color = MaterialTheme.colorScheme.primary,
-                    shape = RoundedCornerShape(4.dp)
-                ) {
-                    Text(
-                        text = "THE ULTIMATE TABLETOP COMPANION",
-                        modifier = Modifier.padding(8.dp),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = Color.White,
-                        textAlign = TextAlign.Center
-                    )
                 }
             }
         }
